@@ -69,36 +69,45 @@
   <div id="paymentModal" class="modal" hidden>
     <div class="modal__backdrop" data-close-modal></div>
     <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="payTitle">
-      <h2 id="payTitle">Unlock your answer</h2>
-      <p class="modal__body">
-        Pay <strong>$2.00</strong> to reveal the result of:
-      </p>
-      <pre id="payExpression" class="modal__expr">0</pre>
 
-      <form id="payForm" class="pay-form" novalidate>
-        <label class="pay-form__row">
-          <span>Card number</span>
-          <input id="cardNumber" type="text" inputmode="numeric" autocomplete="cc-number"
-            placeholder="4242 4242 4242 4242" maxlength="23" required />
-        </label>
-        <div class="pay-form__grid">
-          <label class="pay-form__row">
-            <span>Expiry</span>
-            <input id="cardExpiry" type="text" inputmode="numeric" autocomplete="cc-exp"
-              placeholder="MM/YY" maxlength="5" required />
-          </label>
-          <label class="pay-form__row">
-            <span>CVC</span>
-            <input id="cardCvc" type="text" inputmode="numeric" autocomplete="cc-csc"
-              placeholder="123" maxlength="4" required />
-          </label>
+      <!-- Step 1: confirm -->
+      <div id="stepConfirm">
+        <div class="modal__icon">🔒</div>
+        <h2 id="payTitle">Unlock your answer</h2>
+        <p class="modal__body">Your result is ready — pay <strong>$2.00</strong> to reveal it.</p>
+        <pre id="payExpression" class="modal__expr">0</pre>
+        <div class="demo-card">
+          <div class="demo-card__chip"></div>
+          <div class="demo-card__number">•••• •••• •••• 4242</div>
+          <div class="demo-card__meta">
+            <span>DEMO CARD</span>
+            <span>12/99</span>
+          </div>
         </div>
-        <p id="payError" class="pay-form__error" role="alert" hidden></p>
+        <p class="demo-note">This is a simulated payment. No real charge.</p>
         <div class="pay-form__actions">
           <button type="button" class="btn btn--ghost" data-close-modal>Cancel</button>
-          <button id="payBtn" type="submit" class="btn btn--primary">Pay $2.00</button>
+          <button id="payBtn" class="btn btn--primary" type="button">Pay $2.00</button>
         </div>
-      </form>
+      </div>
+
+      <!-- Step 2: processing -->
+      <div id="stepProcessing" hidden>
+        <div class="modal__icon spin">⏳</div>
+        <h2>Processing…</h2>
+        <p class="modal__body">Charging demo card •••• 4242</p>
+        <div class="progress-bar"><div id="progressFill" class="progress-bar__fill"></div></div>
+      </div>
+
+      <!-- Step 3: success -->
+      <div id="stepSuccess" hidden>
+        <div class="modal__icon">✅</div>
+        <h2>Payment successful!</h2>
+        <p class="modal__body">$2.00 charged to demo card •••• 4242</p>
+        <p class="receipt">Transaction ID: <code id="txnId"></code></p>
+        <button id="revealBtn" class="btn btn--primary btn--full" type="button">Reveal my answer →</button>
+      </div>
+
     </div>
   </div>
 
