@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PayCalc – $2 to see the answer</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="app__header">
+      <h1>PayCalc</h1>
+      <p class="tagline">Calculate freely. Pay $2 to reveal the answer.</p>
+      <div class="status">
+        <span id="unlockStatus" class="status__pill status__pill--locked">Locked</span>
+        <button id="resetBtn" class="status__reset" type="button" title="Reset payment state">Reset</button>
+      </div>
+    </header>
+
+    <section class="calculator" aria-label="Calculator">
+      <div class="display">
+        <div id="expression" class="display__expression" aria-live="polite">0</div>
+        <div class="display__result-wrapper">
+          <div id="result" class="display__result display__result--locked" aria-live="polite">
+            <span id="resultValue">&nbsp;</span>
+          </div>
+          <button id="unlockBtn" class="display__unlock" type="button" hidden>
+            Unlock answer · $2
+          </button>
+        </div>
+      </div>
+
+      <div class="keys">
+        <button class="key key--fn" data-action="clear">AC</button>
+        <button class="key key--fn" data-action="backspace">DEL</button>
+        <button class="key key--op" data-value="%">%</button>
+        <button class="key key--op" data-value="/">÷</button>
+
+        <button class="key" data-value="7">7</button>
+        <button class="key" data-value="8">8</button>
+        <button class="key" data-value="9">9</button>
+        <button class="key key--op" data-value="*">×</button>
+
+        <button class="key" data-value="4">4</button>
+        <button class="key" data-value="5">5</button>
+        <button class="key" data-value="6">6</button>
+        <button class="key key--op" data-value="-">−</button>
+
+        <button class="key" data-value="1">1</button>
+        <button class="key" data-value="2">2</button>
+        <button class="key" data-value="3">3</button>
+        <button class="key key--op" data-value="+">+</button>
+
+        <button class="key" data-value="0">0</button>
+        <button class="key" data-value=".">.</button>
+        <button class="key" data-value="(">(</button>
+        <button class="key" data-value=")">)</button>
+
+        <button class="key key--equals" data-action="equals">=</button>
+      </div>
+    </section>
+
+    <footer class="app__footer">
+      <small>Demo only — payment flow is mocked. No real charges.</small>
+    </footer>
+  </main>
+
+  <!-- Payment modal -->
+  <div id="paymentModal" class="modal" hidden>
+    <div class="modal__backdrop" data-close-modal></div>
+    <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="payTitle">
+      <h2 id="payTitle">Unlock your answer</h2>
+      <p class="modal__body">
+        Pay <strong>$2.00</strong> to reveal the result of:
+      </p>
+      <pre id="payExpression" class="modal__expr">0</pre>
+
+      <form id="payForm" class="pay-form" novalidate>
+        <label class="pay-form__row">
+          <span>Card number</span>
+          <input id="cardNumber" type="text" inputmode="numeric" autocomplete="cc-number"
+            placeholder="4242 4242 4242 4242" maxlength="23" required />
+        </label>
+        <div class="pay-form__grid">
+          <label class="pay-form__row">
+            <span>Expiry</span>
+            <input id="cardExpiry" type="text" inputmode="numeric" autocomplete="cc-exp"
+              placeholder="MM/YY" maxlength="5" required />
+          </label>
+          <label class="pay-form__row">
+            <span>CVC</span>
+            <input id="cardCvc" type="text" inputmode="numeric" autocomplete="cc-csc"
+              placeholder="123" maxlength="4" required />
+          </label>
+        </div>
+        <p id="payError" class="pay-form__error" role="alert" hidden></p>
+        <div class="pay-form__actions">
+          <button type="button" class="btn btn--ghost" data-close-modal>Cancel</button>
+          <button id="payBtn" type="submit" class="btn btn--primary">Pay $2.00</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
